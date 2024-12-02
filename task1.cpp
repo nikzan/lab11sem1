@@ -1,6 +1,6 @@
 #include <iostream>
 #include <limits>
-
+#include <map>
 struct client {
     int code;
     int year;
@@ -16,8 +16,7 @@ int main() {
         std::cout << "Введите корректное количество клиентов: ";
     }
 
-    client min_client;
-    min_client.duration = std::numeric_limits<int>::max();
+    std::map<int, int> client_durations;
 
     for (int i = 0; i < N; ++i) {
         client client_instance;
@@ -28,12 +27,19 @@ int main() {
             std::cout << "Введите корректные данные клиента (код, год, месяц, продолжительность): ";
         }
 
-        if (client_instance.duration <= min_client.duration) {
-            min_client = client_instance;
+        client_durations[client_instance.code] += client_instance.duration;
+    }
+
+    int min_duration = std::numeric_limits<int>::max();
+    int min_code = -1;
+    for (const auto &entry : client_durations) {
+        if (entry.second < min_duration) {
+            min_duration = entry.second;
+            min_code = entry.first;
         }
     }
 
-    std::cout << min_client.duration << " " << min_client.year << " " << min_client.month << std::endl;
+    std::cout << "Код клиента с минимальной продолжительностью: " << min_code << ", продолжительность: " << min_duration << std::endl;
 
     return 0;
 }
