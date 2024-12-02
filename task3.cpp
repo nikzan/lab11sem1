@@ -54,10 +54,37 @@ double average_year(const std::vector<Car> &cars)
 
 int main(){
     std::vector<Car> cars;
-    add_car(cars, "Porsche", "911", 2010);
-    add_car(cars, "Tesla", "Model S", 2015);
-    add_car(cars, "Ford", "Mustang", 2022);
+    int num_cars;
+    std::cout << "Введите количество автомобилей: ";
+    while (!(std::cin >> num_cars) || num_cars <= 0) {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "Введите корректное количество автомобилей: ";
+    }
 
+    for (int i = 0; i < num_cars; ++i) {
+        std::string brand, model;
+        int year;
+        std::cout << "Введите марку автомобиля: ";
+        while (!(std::cin >> brand) || brand.empty()) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Введите корректную марку автомобиля: ";
+        }
+        std::cout << "Введите модель автомобиля: ";
+        while (!(std::cin >> model) || model.empty()) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Введите корректную модель автомобиля: ";
+        }
+        std::cout << "Введите год выпуска автомобиля: ";
+        while (!(std::cin >> year) || year < 1886 || year > 2024) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Введите корректный год выпуска автомобиля (1886-2024): ";
+        }
+        add_car(cars, brand, model, year);
+    }
     std::cout << "Все автомобили:" << std::endl;
     print_all_cars(cars);
 

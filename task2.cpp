@@ -19,11 +19,19 @@ struct shape {
 void input_shape(shape &shape) {
     int type;
     std::cout << "Введите тип фигуры (0 - круг, 1 - квадрат, 2 - отрезок): ";
-    std::cin >> type;
+    while (!(std::cin >> type) || type < 0 || type > 2) {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "Введите корректный тип фигуры (0 - круг, 1 - квадрат, 2 - отрезок): ";
+    }
     shape.type = static_cast<shape_type>(type);
 
     std::cout << "Введите цвет фигуры: ";
-    std::cin >> shape.color;
+    while (!(std::cin >> shape.color) || shape.color.empty()) {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "Введите корректный цвет фигуры: ";
+    }
 
     switch (shape.type) {
         case shape_type::Circle:
